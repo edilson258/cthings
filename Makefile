@@ -1,8 +1,9 @@
 CC = clang
-CFLAGS = -Wall -Werror -pedantic -ggdb
+CFLAGS = -std=c23 -Wall -Werror -pedantic -ggdb
 SRCDIR = src
 BUILDDIR = build
 OBJDIR = $(BUILDDIR)/obj
+LIBS = -lpthread -lm
 
 SRCS := $(shell find $(SRCDIR) -name '*.c')
 OBJS := $(SRCS:%.c=$(OBJDIR)/%.o)
