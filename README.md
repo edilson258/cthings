@@ -1,26 +1,26 @@
-# C Safe Channel (inspired by Rust's mpcs)
+# C Safe Channel (inspired by Rust's mpsc)
 
 This is a header only library that
 enables safe comunication between
 threads through a
 multiple producer single consumer channel.
 
-The main ideia is to have a channel in which
+<b>The main ideia is to have a channel in which
 many threads may send messages to but
-only one thread can receive from the channel.
+only one thread can receive from the channel.</b>
 
 ## Features
-
+- [x] Powered by [pthreads](https://en.wikipedia.org/wiki/Pthreads)
 - [x] Thread safe
 - [x] Free waiting
-- [] Separation between channel input `send` and output `revc`
+- [ ] Separation between channel input `send` and output `revc`
 
 ## Usage
 
 1. Download the `mpcs.h` header file
 
 ```shell
-curl https://x.com
+curl -O https://raw.githubusercontent.com/edilson258/mpsc/main/include/mpsc.h
 ```
 
 2. Simple Example
@@ -32,7 +32,7 @@ curl https://x.com
 #include <unistd.h>
 
 #define MPSC_IMPLEMENTATION
-#include "../include/mpsc.h"
+#include "mpsc.h"
 
 #define ONE_SEC_IN_MICRO_SEC 1000000
 
