@@ -1,4 +1,3 @@
-#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -49,12 +48,12 @@ void *receiver(void *arg) {
 int main(void) {
   Channel *chan = channel_init();
 
-  pthread_t p1, p2, receiver_id;
-  pthread_create(&p1, NULL, producer_hello, chan);
-  pthread_create(&p2, NULL, producer_world, chan);
+  pthread_t first_producer, second_producer, receiver_id;
+  pthread_create(&first_producer, NULL, producer_hello, chan);
+  pthread_create(&second_producer, NULL, producer_world, chan);
   pthread_create(&receiver_id, NULL, receiver, chan);
-  pthread_join(p1, NULL);
-  pthread_join(p2, NULL);
+  pthread_join(first_producer, NULL);
+  pthread_join(second_producer, NULL);
   pthread_join(receiver_id, NULL);
 
   return 0;
