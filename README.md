@@ -13,3 +13,15 @@ The C Things Library aims to address these challenges by providing an abstractio
 - [ ] Log System
 - [ ] Date and Time
 - [ ] Tester
+
+# Usage
+1. From source
+```shell
+git clone https://github.com/edilson258/cthings.git
+cd cthings
+mkdir build
+cd build
+cmake ..
+cmake --build .
+```
+Now you can link with the `libcthings.so`
