@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../include/strings.h"
+#include "../include/Strings.h"
 
 String_t String_new(RawStr_t text) {
   unsigned long text_len = strlen(text);

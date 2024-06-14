@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/queue.h"
+#include "../include/Queue.h"
 
 Queue_t Queue_new() {
   Queue_t queue = malloc(sizeof(Queue_t));

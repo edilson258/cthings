@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/mpsc.h"
-#include "../include/queue.h"
+#include "../include/MPSC.h"
+#include "../include/Queue.h"
 
 Channel *Channel_new(void) {
   Channel *chan = malloc(sizeof(Channel));

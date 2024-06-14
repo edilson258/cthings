@@ -3,7 +3,7 @@
 
 #include <pthread.h>
 
-#include "queue.h"
+#include "Queue.h"
 
 /// This structure represents a channel through which multiple
 /// threads can pass and receive messages

@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "../include/common.h"
-#include "../include/mpsc.h"
-#include "../include/strings.h"
+#include "../include/Common.h"
+#include "../include/MPSC.h"
+#include "../include/Strings.h"
 
 #define ONE_SEC_IN_MICRO_SEC 1000000
 
