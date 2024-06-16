@@ -63,6 +63,12 @@ int main(void) {
     return 0;
 }
 ```
+4. Compile and link with `cthings` library
+
+```shell
+clang -c -o main.o main.c
+clang -o main main.o -lcthings -L./cthings/lib
+```
 
 ## Contributions
 
