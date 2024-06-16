@@ -2,43 +2,182 @@
 #define STRINGS_H
 
 typedef struct String {
-  /// private field should only accessed by internal API
+  /* Private field should only be accessed by internal API */
   char *inner;
 } String;
 
-/// A Syntax sugar for `String *`
+/* Syntax sugar for `String *` */
 typedef String *String_t;
-/// A Syntax sugar for `char *`
+
+/* Syntax sugar for `char *` */
 typedef char *RawStr_t;
 
-/// Create a stack String instance
+/*
+ * Function: String(text)
+ *
+ * Create a stack String instance initialized with the provided text.
+ *
+ * Parameters:
+ *   text - Pointer to the C-style string to initialize the String with.
+ *
+ * Returns:
+ *   The created String instance.
+ */
 #define String(text)                                                           \
   ({                                                                           \
     String string = {.inner = text};                                           \
     string;                                                                    \
   })
 
-/// Will create a new instance of string on the heap
+/*
+ * Function: String_new(text)
+ *
+ * Create a new heap-allocated String instance initialized with the provided
+ * text.
+ *
+ * Parameters:
+ *   text - Pointer to the C-style string to initialize the String with.
+ *
+ * Returns:
+ *   Pointer to the newly allocated String instance, or NULL if allocation
+ * fails.
+ *
+ */
 String_t String_new(RawStr_t text);
-/// Will clean up the string
+
+/*
+ * Function: String_drop(string)
+ *
+ * Clean up (free memory) allocated for the String instance.
+ *
+ * Parameters:
+ *   string - Pointer to the String instance to be cleaned up.
+ *
+ * Returns:
+ *   None
+ *
+ */
 void String_drop(String_t string);
-/// Returns the raw value `char *`
+
+/*
+ * Function: String_val(string)
+ *
+ * Returns the raw C-style string (`char *`) stored inside the String.
+ *
+ * Parameters:
+ *   string - Pointer to the String instance.
+ *
+ * Returns:
+ *   Pointer to the C-style string contained within the String.
+ *
+ */
 RawStr_t String_val(String_t string);
-/// Returns a deep copy of the original string.
+
+/*
+ * Function: String_clone(src)
+ *
+ * Create and return a deep copy of the source String instance.
+ *
+ * Parameters:
+ *   src - Pointer to the source String instance to be cloned.
+ *
+ * Returns:
+ *   Pointer to the newly created deep copy of the source String instance.
+ *
+ */
 String_t String_clone(String_t src);
-/// cuts off all the whitespaces including `\t,\f,\n,...` in the beggining of
-/// the string
+
+/*
+ * Function: String_ltrim(string)
+ *
+ * Remove leading whitespaces (including `\t, \f, \n, ...`) from the String.
+ *
+ * Parameters:
+ *   string - Pointer to the String instance to be left-trimmed.
+ *
+ * Returns:
+ *   Pointer to the left-trimmed String instance.
+ *
+ */
 String_t String_ltrim(String_t string);
-/// cuts off all the trailing whitespaces including `\t,\f,\n,...`
+
+/*
+ * Function: String_rtrim(string)
+ *
+ * Remove trailing whitespaces (including `\t, \f, \n, ...`) from the String.
+ *
+ * Parameters:
+ *   string - Pointer to the String instance to be right-trimmed.
+ *
+ * Returns:
+ *   Pointer to the right-trimmed String instance.
+ *
+ */
 String_t String_rtrim(String_t string);
-/// cuts off all the whitespaces including `\t,\f,\n,...` in the beggining and
-/// in the end
+
+/*
+ * Function: String_trim(string)
+ *
+ * Remove leading and trailing whitespaces (including `\t, \f, \n, ...`) from
+ * the String.
+ *
+ * Parameters:
+ *   string - Pointer to the String instance to be trimmed.
+ *
+ * Returns:
+ *   Pointer to the trimmed String instance.
+ *
+ */
 String_t String_trim(String_t string);
-/// Returns the `length` of the wrapped `char *` string
+
+/*
+ * Function: String_len(string)
+ *
+ * Returns the length of the C-style string stored inside the String instance.
+ *
+ * Parameters:
+ *   string - Pointer to the String instance.
+ *
+ * Returns:
+ *   Length of the C-style string stored inside the String.
+ *
+ */
 unsigned long String_len(String_t string);
-/// Joins two strings together and returns the full sting without modifying the
-/// original strings
+
+/*
+ * Function: String_join(lhs, rhs)
+ *
+ * Join two String instances together and return a new String instance
+ * containing the concatenated result.
+ *
+ * Parameters:
+ *   lhs - Pointer to the left-hand side String instance.
+ *   rhs - Pointer to the right-hand side String instance.
+ *
+ * Returns:
+ *   Pointer to the newly created String instance containing the concatenated
+ * result.
+ *
+ */
 String_t String_join(String_t lhs, String_t rhs);
-/// Same as `String_join(x,y)` but with a `delimiter`
+
+/*
+ * Function: String_join_by(lhs, rhs, delimiter)
+ *
+ * Join two String instances together with a delimiter and return a new String
+ * instance containing the concatenated result.
+ *
+ * Parameters:
+ *   lhs - Pointer to the left-hand side String instance.
+ *   rhs - Pointer to the right-hand side String instance.
+ *   delimiter - Pointer to the delimiter C-style string to be used in between
+ * lhs and rhs.
+ *
+ * Returns:
+ *   Pointer to the newly created String instance containing the concatenated
+ * result with the delimiter.
+ *
+ */
 String_t String_join_by(String_t lhs, String_t rhs, RawStr_t delimiter);
+
 #endif
