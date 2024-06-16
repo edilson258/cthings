@@ -22,13 +22,14 @@ git clone https://github.com/edilson258/cthings.git
 cd cthings
 cmake -B build
 cmake --build build
+python3 ./headers-joiner.py
 ```
 
 2. Build example ([Vector](examples/Vector.c))
 ```shell
 clang -o vec.o examples/Vector.c
-clang -o vec vec.o -lcthingsstatic -L./build
-./vec # run the final executable
+clang -o vec vec.o -lcthings -L./build
+./vec
 ```
 
 # Usage
