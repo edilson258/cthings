@@ -41,4 +41,4 @@ This project follows the **KISS (Keep It Simple, Stupid)** principle, ensuring t
 
 ## Getting Help
 
-If you need any help or have questions, feel free to open an issue or reach out to [me] at [dev.258.edilson@gmail.com]. I encourage you to ask questions and engage with the community.
+If you need any help or have questions, feel free to open an issue or reach out to [me](dev.258.edilson@gmail.com). I encourage you to ask questions and engage with the community.
