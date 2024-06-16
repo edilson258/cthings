@@ -8,20 +8,37 @@ The C Things Library aims to address these challenges by providing an abstractio
 - [x] [Strings methods](docs/STRINGS.md)
 - [x] [Queue Data structure](docs/QUEUE.md)
 - [ ] Stack Data structure
-- [ ] Vectors
+- [x] [Vectors](docs/VECTOR.md)
 - [ ] HashMaps
 - [ ] Log System
 - [ ] Date and Time
-- [ ] Tester
+- [ ] Tester Library
 
-# Usage
-1. From source
+# Building an Example
+
+1. Build The Library
 ```shell
 git clone https://github.com/edilson258/cthings.git
 cd cthings
-mkdir build
-cd build
-cmake ..
-cmake --build .
+cmake -B build
+cmake --build build
 ```
-Now you can link with the `libcthings.so`
+
+2. Build example ([Vector](examples/Vector.c))
+```shell
+clang -o vec.o examples/Vector.c
+clang -o vec vec.o -lcthingsstatic -L./build
+./vec # run the final executable
+```
+
+# Usage
+
+We have no release yet. So the only way of using is by the source code.
+
+# Contributions
+
+This project follows the **KISS (Keep It Simple, Stupid)** principle, ensuring that the codebase remains clean, straightforward, and easy to understand. We welcome contributions from developers of all experience levels, especially those new to coding in C. Whether you're looking to fix bugs, add new features, or improve documentation, your efforts are valued and appreciated.
+
+## Getting Help
+
+If you need any help or have questions, feel free to open an issue or reach out to [me] at [dev.258.edilson@gmail.com]. I encourage you to ask questions and engage with the community.
