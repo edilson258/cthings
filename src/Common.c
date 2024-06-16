@@ -1,32 +1,9 @@
-#ifndef C_THINGS
-#define C_THINGS
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-/*
- * Typedef: Any_t
- *
- * Is just a wrapper of `void *`
- *
- */
-typedef void *Any_t;
-
-/*
- * Typedef: Node
- *
- * A wrapper of data on dynamic growing structures
- *
- */
-typedef struct Node {
-  void *data;
-  struct Node *next;
-} Node;
-
-/*
- * Typedef: Node_t
- *
- * Is type alias of `Node *`
- *
- */
-typedef Node *Node_t;
+#include "../include/Common.h"
 
 /*
  * Function: Node_new(Any_t data) -> Node_t
@@ -42,7 +19,17 @@ typedef Node *Node_t;
  * - Node_t: a node that wraps the `data`
  *
  */
-Node_t Node_new(Any_t data);
+Node_t Node_new(void *data) {
+  Node_t node = (Node_t)malloc(sizeof(Node));
+  if (node == NULL) {
+    fprintf(stderr, "[Error]: Couldn't allocate space for a node: %s\n",
+            strerror(errno));
+    return NULL;
+  }
+  node->data = data;
+  node->next = NULL;
+  return node;
+}
 
 /*
  * Function: Int(int immediate) -> int*
@@ -59,7 +46,11 @@ Node_t Node_new(Any_t data);
  * - int *: a pointer to the heap allocated integer `immediate`
  *
  */
-int *Int(int immediate);
+int *Int(int immediate) {
+  int *out = malloc(sizeof(int));
+  memcpy(out, &immediate, sizeof(int));
+  return out;
+}
 
 /*
  * Function: Str(char* immediate) -> char*
@@ -76,5 +67,9 @@ int *Int(int immediate);
  * - char *: a pointer to the heap allocated string `immediate`
  *
  */
-char *Str(char *immediate);
-#endif
+char *Str(char *immediate) {
+  char *out = malloc(sizeof(char) * strlen(immediate) + 1);
+  memcpy(out, immediate, strlen(immediate));
+  out[strlen(immediate)] = 0;
+  return out;
+}

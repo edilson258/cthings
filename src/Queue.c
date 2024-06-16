@@ -5,7 +5,7 @@
 #include "../include/Queue.h"
 
 Queue_t Queue_new() {
-  Queue_t queue = malloc(sizeof(Queue_t));
+  Queue_t queue = malloc(sizeof(Queue));
   if (queue == NULL) {
     fprintf(stderr, "[Error]: Couldn't allocate space for message node: %s\n",
             strerror(errno));
@@ -46,16 +46,4 @@ int Queue_equeue(Queue_t queue, void *data) {
     tmp->next = node;
   }
   return 0;
-}
-
-Node_t Node_new(void *data) {
-  Node_t node = malloc(sizeof(Node));
-  if (node == NULL) {
-    fprintf(stderr, "[Error]: Couldn't allocate space for a node: %s\n",
-            strerror(errno));
-    return NULL;
-  }
-  node->data = data;
-  node->next = NULL;
-  return node;
 }
