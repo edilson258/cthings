@@ -27,12 +27,6 @@ void Vector_push(Vector_t vec, Any_t elem) {
   vec->size++;
 }
 
-typedef Any_t (*MapFn)(Any_t vec_item);
-
-typedef void (*ReduceFn)(Any_t vec_item, Any_t acc);
-
-typedef int (*FilterFn)(Any_t vec_item);
-
 Vector_t Vector_map(Vector_t vec, MapFn fn) {
   Vector_t new_vec = Vector_new();
   Node_t tmp = vec->head;
