@@ -1,5 +1,5 @@
-#ifndef C_THINGS
-#define C_THINGS
+#ifndef COMMON_H
+#define COMMON_H
 
 /*
  * Typedef: Any_t
@@ -77,4 +77,4 @@ int *Int(int immediate);
  *
  */
 char *Str(char *immediate);
-#endif
+#endif // COMMON_H

@@ -180,4 +180,4 @@ String_t String_join(String_t lhs, String_t rhs);
  */
 String_t String_join_by(String_t lhs, String_t rhs, RawStr_t delimiter);
 
-#endif
+#endif // STRINGS_H

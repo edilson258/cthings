@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../include/Vector.h"
+#include "../build/cthings.h"
 
 typedef struct {
   int age;

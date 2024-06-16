@@ -68,4 +68,4 @@ void *Queue_dequeue(Queue_t queue);
  */
 int Queue_enqueue(Queue_t queue, Any_t data);
 
-#endif
+#endif // QUEUE_H

@@ -1,5 +1,5 @@
-#ifndef VECTOR_H
-#define VECTOR_H
+#ifndef VECTORS_H
+#define VECTORS_H
 
 #include <stddef.h>
 
@@ -160,4 +160,4 @@ void Vector_reduce(Vector_t vec, ReduceFn fn, Any_t acc);
  */
 Vector_t Vector_filter(Vector_t vec, FilterFn fn);
 
-#endif
+#endif // VECTORS_H
