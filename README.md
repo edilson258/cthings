@@ -12,7 +12,7 @@ The C Things Library aims to address these challenges by providing an abstractio
 - [ ] HashMaps
 - [ ] Log System
 - [ ] Date and Time
-- [ ] Tester Library
+- [x] [Tester Library](docs/TESTER.md)
 
 ## Usage
 
