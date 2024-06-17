@@ -160,4 +160,20 @@ void Vector_reduce(Vector_t vec, ReduceFn fn, Any_t acc);
  */
 Vector_t Vector_filter(Vector_t vec, FilterFn fn);
 
+/*
+ * Function: Vector_len(Vector_t vec) -> size_t
+ *
+ * Will return the length of the Vector `vec`
+ *
+ * Parameters:
+ *
+ * - Vector_t vec: The vector to get its length
+ *
+ * Returns:
+ *
+ * - size_t: the length of the vector `vec`
+ *
+ */
+size_t Vector_len(Vector_t vec);
+
 #endif // VECTORS_H

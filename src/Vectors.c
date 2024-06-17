@@ -58,3 +58,5 @@ Vector_t Vector_filter(Vector_t vec, FilterFn fn) {
 
   return filter_vec;
 }
+
+size_t Vector_len(Vector_t vec) { return vec->size; }
