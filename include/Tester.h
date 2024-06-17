@@ -31,66 +31,70 @@ typedef TEST (*TEST_fn)(void);
  *
  */
 typedef struct {
+  Str_t title;
   size_t count;
   TEST_fn tests[5];
-} Tester;
+} TestSuite;
 
 /*
- * Typedef: Tester_t
+ * Typedef: TestSuite
  *
  * A type alias for `Tester *`
  *
  */
-typedef Tester *Tester_t;
+typedef TestSuite *TestSuite_t;
 
 /*
- * Function: Tester_new() -> Tester_t
+ * Function: TestSuite_new(Str_t title) -> TestSuite_t
  *
- * Will create a Test context
- *
- * Returns:
- *
- * - Tester_t: an instance of the Test context
- *
- */
-Tester_t Tester_new();
-
-/*
- * Function: Tester_add(Tester_t t, TEST_fn fn)
- *
- * Will append a test TEST_fn `fn` to the Test context `t`
+ * Will create a new suite of tests
  *
  * Parameters:
  *
- * - Tester_t t: The Test context
- * - TEST_fn fn: The test to be added in the context
+ * - Str_t title: The title of the suite tests
+ *
+ * Returns:
+ *
+ * - TestSuite_t: a test suite
  *
  */
-void Tester_add(Tester_t t, TEST_fn fn);
+TestSuite_t TestSuite_new(Str_t title);
 
 /*
- * Function: Tester_run(Tester_t t)
+ * Function: TestSuite_add(TestSuite_t ts, TEST_fn fn)
  *
- * Will run all the tests inside of the Test context `t` and then print the
+ * Will append the test function `fn` to the suite of tests  `ts`
+ *
+ * Parameters:
+ *
+ * - TestSuite ts: The suite of test
+ * - TEST_fn fn: The test to be added in the suite
+ *
+ */
+void TestSuite_add(TestSuite_t ts, TEST_fn fn);
+
+/*
+ * Function: Tester_run(TestSuite ts)
+ *
+ * Will run all the tests inside of the suite of tests `ts` and then print the
  * summary
  *
  * Parameters:
  *
- * - Tester_t t: The Test context
+ * - TestSuite_t ts: The suite of tests
  *
  */
-size_t Tester_run(Tester_t t);
+size_t TestSuite_run(TestSuite_t ts);
 
 /*
  * INTERNAL API
  *
  */
 
-TEST __assert_equals_int__(int expected, int provided, char *file, char *fn,
-                           int line);
-TEST __assert_equals_struct__(Any_t expected, Any_t provided,
-                              size_t struct_size, char *file, char *fn,
-                              int line);
+TEST __assert_eq_int__(int expected, int provided, char *file, char *fn,
+                       int line);
+TEST __assert_eq_struct__(Any_t expected, Any_t provided, size_t struct_size,
+                          char *file, char *fn, int line);
 TEST __assert_true__(Boolean val, char *file, char *fn, int line);
 
 /*
@@ -101,15 +105,15 @@ TEST __assert_true__(Boolean val, char *file, char *fn, int line);
  */
 
 /// Checks if the provided ints are equal
-#define ASSERT_EQUALS_INT(expected, provided)                                  \
-  return __assert_equals_int__(expected, provided, (char *)__FILE__,           \
-                               (char *)__FUNCTION__, __LINE__)
+#define ASSERT_EQ_INT(expected, provided)                                      \
+  return __assert_eq_int__(expected, provided, (char *)__FILE__,               \
+                           (char *)__FUNCTION__, __LINE__)
 
 /// Checks if the provided structs are equal
-#define ASSERT_EQUALS_STRUCT(expected, provided, struct_size)                  \
-  return __assert_equals_struct__(expected, provided, struct_size,             \
-                                  (char *)__FILE__, (char *)__FUNCTION__,      \
-                                  __LINE__)
+#define ASSERT_EQ_STRUCT(expected, provided, struct_size)                      \
+  return __assert_eq_struct__(expected, provided, struct_size,                 \
+                              (char *)__FILE__, (char *)__FUNCTION__,          \
+                              __LINE__)
 
 /// Expects val to be a Boolean `True`
 #define ASSERT_TRUE(val)                                                       \
