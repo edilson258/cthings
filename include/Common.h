@@ -77,4 +77,12 @@ int *Int(int immediate);
  *
  */
 char *Str(char *immediate);
+
+typedef enum {
+  False = 0,
+  True = 1,
+} Boolean;
+
+#define Boolean(x) x == False ? "False" : "True"
+
 #endif // COMMON_H

@@ -6,7 +6,8 @@ HEADER_FILES = [
     "./include/Strings.h",
     "./include/Vectors.h",
     "./include/Queue.h",
-    "./include/MPSC.h"
+    "./include/MPSC.h",
+    "./include/Tester.h",
 ]
 
 # Set to store unique #include statements
