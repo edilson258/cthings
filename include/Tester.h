@@ -79,7 +79,7 @@ void Tester_add(Tester_t t, TEST_fn fn);
  * - Tester_t t: The Test context
  *
  */
-void Tester_run(Tester_t t);
+size_t Tester_run(Tester_t t);
 
 /*
  * INTERNAL API

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "../build/cthings.h"
+#include "../include/Tester.h"
 
 typedef struct Person {
   int age;
@@ -54,5 +54,5 @@ int main() {
   Tester_add(t, test_mul_two_ints);
   Tester_add(t, test_create_person);
   Tester_add(t, test_expect_true);
-  Tester_run(t);
+  return Tester_run(t);
 }

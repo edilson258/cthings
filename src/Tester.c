@@ -15,7 +15,7 @@ void Tester_add(Tester_t t, TEST_fn fn) {
   t->tests[t->count++] = fn;
 }
 
-void Tester_run(Tester_t t) {
+size_t Tester_run(Tester_t t) {
   size_t oks = 0;
   size_t fails = 0;
 
@@ -29,6 +29,8 @@ void Tester_run(Tester_t t) {
   printf("\nSummary:\n");
   printf("    [PASSED] %zu\n", oks);
   printf("    [FaILED] %zu\n", fails);
+
+  return fails;
 }
 
 /*
