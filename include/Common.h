@@ -78,11 +78,21 @@ int *Int(int immediate);
  */
 char *Str(char *immediate);
 
+/// Boolean Type
 typedef enum {
   False = 0,
   True = 1,
 } Boolean;
 
+/// Convert a Boolean val to corresponding text
 #define Boolean(x) x == False ? "False" : "True"
+
+/*
+ * Typedef: Str_t
+ *
+ * A type alias of 'char *'
+ *
+ */
+typedef char *Str_t;
 
 #endif // COMMON_H
