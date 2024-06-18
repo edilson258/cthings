@@ -93,9 +93,12 @@ size_t TestSuite_run(TestSuite_t ts);
 
 TEST __assert_eq_int__(int expected, int provided, char *file, char *fn,
                        int line);
+TEST __assert_eq_str__(Str_t expected, Str_t provided, Str_t file, Str_t fn,
+                       int line);
 TEST __assert_eq_struct__(Any_t expected, Any_t provided, size_t struct_size,
                           char *file, char *fn, int line);
 TEST __assert_true__(Boolean val, char *file, char *fn, int line);
+TEST __assert_null_pointer__(Any_t nullp, char *file, char *fn, int line);
 
 /*
  *
@@ -109,6 +112,11 @@ TEST __assert_true__(Boolean val, char *file, char *fn, int line);
   return __assert_eq_int__(expected, provided, (char *)__FILE__,               \
                            (char *)__FUNCTION__, __LINE__)
 
+/// Checks if the provided strs are equal
+#define ASSERT_EQ_STR(expected, provided)                                      \
+  return __assert_eq_str__(expected, provided, (char *)__FILE__,               \
+                           (char *)__FUNCTION__, __LINE__)
+
 /// Checks if the provided structs are equal
 #define ASSERT_EQ_STRUCT(expected, provided, struct_size)                      \
   return __assert_eq_struct__(expected, provided, struct_size,                 \
@@ -118,5 +126,10 @@ TEST __assert_true__(Boolean val, char *file, char *fn, int line);
 /// Expects val to be a Boolean `True`
 #define ASSERT_TRUE(val)                                                       \
   return __assert_true__(val, (char *)__FILE__, (char *)__FUNCTION__, __LINE__)
+
+/// Expects val to be a `NULL`
+#define ASSERT_NULL_POINTER(nullp)                                             \
+  return __assert_null_pointer__(nullp, (char *)__FILE__,                      \
+                                 (char *)__FUNCTION__, __LINE__)
 
 #endif // TESTER_H

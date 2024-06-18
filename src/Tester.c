@@ -54,6 +54,19 @@ TEST __assert_eq_int__(int expected, int provided, char *file, char *fn,
   return FAIL;
 }
 
+TEST __assert_eq_str__(Str_t expected, Str_t provided, Str_t file, Str_t fn,
+                       int line) {
+  if (strcmp(expected, provided) == 0) {
+    printf("[\033[32m PASS \033[0m] %s:%d %s\n", file, line, fn);
+    return PASS;
+  }
+
+  fprintf(stderr,
+          "[\033[31m FAIL \033[0m] %s:%d: %s EXPECTED: %s PROVIDED: %s\n", file,
+          line, fn, expected, provided);
+  return FAIL;
+}
+
 TEST __assert_eq_struct__(Any_t expected, Any_t provided, size_t struct_size,
                           char *file, char *fn, int line) {
   if (0 == memcmp(expected, provided, struct_size)) {
@@ -72,6 +85,17 @@ TEST __assert_true__(Boolean val, char *file, char *fn, int line) {
   }
 
   fprintf(stderr, "[\033[31m FAIL \033[0m] %s:%d: %s: expects True\n", file,
+          line, fn);
+  return FAIL;
+}
+
+TEST __assert_null_pointer__(Any_t nullp, char *file, char *fn, int line) {
+  if (nullp == NULL) {
+    printf("[\033[32m PASS \033[0m] %s:%d %s\n", file, line, fn);
+    return PASS;
+  }
+
+  fprintf(stderr, "[\033[31m FAIL \033[0m] %s:%d: %s: expects NULL\n", file,
           line, fn);
   return FAIL;
 }
