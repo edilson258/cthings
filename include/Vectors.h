@@ -176,4 +176,25 @@ Vector_t Vector_filter(Vector_t vec, FilterFn fn);
  */
 size_t Vector_len(Vector_t vec);
 
+/*
+ * Function: Vector_at(Vector_t vec, size_t index) -> Any_t
+ *
+ * Will return the element in the index `index`, in case of out of bound `NULL`
+ * will be returned
+ *
+ * `Note`: The element returned still pointed by the vector, the developer
+ * should clone it before any modification to avoid data corruptions
+ *
+ * Parameters:
+ *
+ * - Vector_t vec: The Vector that holds the element to be indexed
+ * - size_t index: The positio of the element in the vector
+ *
+ * Returns:
+ *
+ * - 'Any_t': the element or NULL in case of out of bound
+ *
+ */
+Any_t Vector_at(Vector_t vec, size_t index);
+
 #endif // VECTORS_H

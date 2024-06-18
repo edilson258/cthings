@@ -60,3 +60,16 @@ Vector_t Vector_filter(Vector_t vec, FilterFn fn) {
 }
 
 size_t Vector_len(Vector_t vec) { return vec->size; }
+
+Any_t Vector_at(Vector_t vec, size_t index) {
+  if (index < 0 || index >= vec->size) {
+    return NULL;
+  }
+
+  Node_t tmp = vec->head;
+  for (size_t i = 0; i < index; ++i) {
+    tmp = tmp->next;
+  }
+
+  return tmp->data;
+}
