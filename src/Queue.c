@@ -28,7 +28,7 @@ void *Queue_dequeue(Queue_t queue) {
   return message;
 }
 
-int Queue_equeue(Queue_t queue, void *data) {
+int Queue_enqueue(Queue_t queue, void *data) {
   Node_t node = Node_new(data);
   if (node == NULL) {
     return -1;
