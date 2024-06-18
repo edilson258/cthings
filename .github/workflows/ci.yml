@@ -17,6 +17,8 @@ jobs:
         cd build
         cmake ..
     - name: Build
-      run: cmake --build .
+      run: cmake --build build
     - name: Test
-      run: ctest --verbose
+      run: |
+        cd build
+        ctest --verbose
