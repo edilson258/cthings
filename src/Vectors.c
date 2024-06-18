@@ -13,7 +13,7 @@ int Vector_isempty(Vector_t vec) { return vec->size == 0; }
 void Vector_push(Vector_t vec, Any_t elem) {
   if (Vector_isempty(vec)) {
     vec->head = Node_new(elem);
-  } else [[clang::likely]] {
+  } else {
     Node_t tmp = vec->head;
     /*
      * O(n)
