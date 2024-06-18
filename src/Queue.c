@@ -12,6 +12,7 @@ Queue_t Queue_new() {
     return NULL;
   }
   queue->head = NULL;
+  queue->size = 0;
   return queue;
 }
 
@@ -25,6 +26,7 @@ void *Queue_dequeue(Queue_t queue) {
   queue->head = node->next;
   void *message = node->data;
   free(node);
+  queue->size--;
   return message;
 }
 
@@ -45,5 +47,8 @@ int Queue_enqueue(Queue_t queue, void *data) {
       tmp = tmp->next;
     tmp->next = node;
   }
+  queue->size++;
   return 0;
 }
+
+size_t Queue_size(Queue_t queue) { return queue->size; }

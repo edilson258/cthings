@@ -2,6 +2,7 @@
 #define QUEUE_H
 
 #include "Common.h"
+#include <stddef.h>
 
 /*
  * Structure: Queue
@@ -13,6 +14,7 @@
  */
 typedef struct {
   Node_t head;
+  size_t size;
 } Queue;
 
 typedef Queue *Queue_t;
@@ -67,5 +69,21 @@ void *Queue_dequeue(Queue_t queue);
  * - int: 0 on success, -1 if allocation fails when creating a new node.
  */
 int Queue_enqueue(Queue_t queue, Any_t data);
+
+/*
+ * Function: Queue_size(Queue_t queue) -> size_t
+ *
+ * Will return the number of elements in the Queue `queue`
+ *
+ * Parameters:
+ *
+ * - Queue_t queue: The queue to know its size
+ *
+ * Returns:
+ *
+ * - size_t: The number of elements in the Queue `queue`
+ *
+ */
+size_t Queue_size(Queue_t queue);
 
 #endif // QUEUE_H
