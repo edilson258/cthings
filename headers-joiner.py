@@ -1,13 +1,16 @@
 import os
 
 # List of header files to combine
+# RESPECT THE ORDER of #includes
+
 HEADER_FILES = [
     "./include/Common.h",
     "./include/Strings.h",
     "./include/Vectors.h",
     "./include/Queue.h",
     "./include/MPSC.h",
-    "./include/Tester.h",
+    "./include/Stack.h",
+    "./include/Testlib.h",
 ]
 
 # Set to store unique #include statements
