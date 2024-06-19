@@ -1,5 +1,5 @@
 #include "../include/MPSC.h"
-#include "../include/Tester.h"
+#include "../include/Testlib.h"
 
 TEST check_if_sent_msg_is_recvd() {
   Channel_t chan = Channel_new();
