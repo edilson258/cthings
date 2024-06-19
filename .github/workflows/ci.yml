@@ -17,3 +17,8 @@ jobs:
       run: cmake --build build
     - name: Test
       run: ctest --test-dir build/tests --verbose
+    - uses: actions/upload-artifact@v4
+      with:
+        name: x86_64-libcthings.a
+        path: build/libcthings.a
+
