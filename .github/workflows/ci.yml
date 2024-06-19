@@ -12,13 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Configure Cmake
-      run: |
-        mkdir build
-        cd build
-        CC=clang cmake ..
+      run: CC=clang cmake -B build
     - name: Build
       run: cmake --build build
     - name: Test
-      run: |
-        cd build
-        ctest --verbose
+      run: ctest --test-dir build/tests --verbose
