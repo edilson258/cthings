@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "../include/Tester.h"
+#include "../include/Testlib.h"
 
 typedef struct Person {
   int age;

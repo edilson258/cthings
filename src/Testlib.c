@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../include/Tester.h"
+#include "../include/Testlib.h"
 
 TestSuite_t TestSuite_new(Str_t title) {
   TestSuite_t ts = malloc(sizeof(TestSuite));

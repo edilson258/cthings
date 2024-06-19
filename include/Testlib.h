@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 
-#include "../include/Common.h"
+#include "Common.h"
 
 /*
  * Typedef: TEST
