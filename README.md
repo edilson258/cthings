@@ -1,18 +1,18 @@
-# C Things Library
+# C Things Framework
 Despite its many strengths, C is a low-level programming language that requires developers to implement data structures and algorithms from scratch. This can be both time-consuming and error-prone.
 
-The C Things Library aims to address these challenges by providing an abstraction layer for common data structures and functionalities. Our library exposes a user-friendly and easy-to-use API, allowing developers to focus on building their applications without reinventing the wheel.
+The C Things Framework aims to address these challenges by providing an abstraction layer for common data structures and functionalities. Our library exposes a user-friendly and easy-to-use API, allowing developers to focus on building their applications without reinventing the wheel.
 
 ## Features
 - [x] [Multiple Producer Single Consumer Channel for thread-safe communication](docs/MPSC.md)
-- [x] [Strings methods](docs/STRINGS.md)
+- [x] [Strings Library](docs/STRINGS.md)
 - [x] [Queue Data structure](docs/QUEUE.md)
-- [ ] Stack Data structure
-- [x] [Vectors](docs/VECTOR.md)
-- [ ] HashMaps
+- [x] Stack Data structure
+- [x] [Vector Library](docs/VECTORS.md)
+- [ ] HashMap Data structure
 - [ ] Log System
 - [ ] Date and Time
-- [x] [Tester Library](docs/TESTER.md)
+- [x] [Test Library](docs/TESTLIB.md)
 
 ## Usage
 
@@ -27,9 +27,12 @@ cmake -B build
 cmake --build build
 python3 headers-joiner.py
 ```
+- Now you can include the header `build/cthings.h` on `C` program
+
 2. Write some code 
 
 `cthings/main.c`
+
 ```c
 #include "./build/cthings.h"
 
