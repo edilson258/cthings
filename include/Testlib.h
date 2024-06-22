@@ -1,135 +1,95 @@
-#ifndef TESTER_H
-#define TESTER_H
+#ifndef TEST_LIBRARY_H
+#define TEST_LIBRARY_H
 
 #include <stddef.h>
 
 #include "Common.h"
 
-/*
- * Typedef: TEST
- *
- * Represents a test result
- *
- */
-typedef enum {
-  PASS = 0,
-  FAIL = 1,
-} TEST;
+typedef void (*TestBody)();
 
-/*
- * Typedef: TEST_fn
- *
- * The signature of a test function
- *
- */
-typedef TEST (*TEST_fn)(void);
+struct Test {
+  Str_t name;
+  TestBody body;
+  Boolean has_failed;
+};
 
-/*
- * Typedef: Tester
- *
- * A Test context
- *
- */
-typedef struct {
-  Str_t title;
+struct TestSuite {
+  Str_t name;
+  size_t cap;
   size_t count;
-  TEST_fn tests[5];
-} TestSuite;
+  size_t fails_count;
+  struct Test **tests;
+  struct Test *curr_test;
+};
 
-/*
- * Typedef: TestSuite
- *
- * A type alias for `Tester *`
- *
- */
-typedef TestSuite *TestSuite_t;
-
-/*
- * Function: TestSuite_new(Str_t title) -> TestSuite_t
- *
- * Will create a new suite of tests
- *
- * Parameters:
- *
- * - Str_t title: The title of the suite tests
- *
- * Returns:
- *
- * - TestSuite_t: a test suite
- *
- */
-TestSuite_t TestSuite_new(Str_t title);
-
-/*
- * Function: TestSuite_add(TestSuite_t ts, TEST_fn fn)
- *
- * Will append the test function `fn` to the suite of tests  `ts`
- *
- * Parameters:
- *
- * - TestSuite ts: The suite of test
- * - TEST_fn fn: The test to be added in the suite
- *
- */
-void TestSuite_add(TestSuite_t ts, TEST_fn fn);
-
-/*
- * Function: Tester_run(TestSuite ts)
- *
- * Will run all the tests inside of the suite of tests `ts` and then print the
- * summary
- *
- * Parameters:
- *
- * - TestSuite_t ts: The suite of tests
- *
- */
-size_t TestSuite_run(TestSuite_t ts);
+extern struct TestSuite *global_test_suite_object;
 
 /*
  * INTERNAL API
  *
  */
 
-TEST __assert_eq_int__(int expected, int provided, char *file, char *fn,
-                       int line);
-TEST __assert_eq_str__(Str_t expected, Str_t provided, Str_t file, Str_t fn,
-                       int line);
-TEST __assert_eq_struct__(Any_t expected, Any_t provided, size_t struct_size,
-                          char *file, char *fn, int line);
-TEST __assert_true__(Boolean val, char *file, char *fn, int line);
-TEST __assert_null_pointer__(Any_t nullp, char *file, char *fn, int line);
+void setup_global_test_suite_object(Str_t file);
+struct Test *Test_new(Str_t name, TestBody body);
+void register_test(Str_t name, TestBody body, Str_t filename);
 
 /*
- *
- * TESTING INTERFACE
- *   => List of macros used to do assertion and expects
+ * Public API
  *
  */
 
-/// Checks if the provided ints are equal
+Boolean __assert_null__(Any_t expression, int line_number);
+Boolean __assert_true__(Boolean expression, int line_number);
+Boolean __assert_false__(Boolean expression, int line_number);
+Boolean __assert_eq_int__(int expected, int provided, int line_number);
+Boolean __assert_neq_int__(int expected, int provided, int line_number);
+Boolean __assert_eq_str__(Str_t expected, Str_t provided, int line_number);
+Boolean __assert_eq_struct__(Any_t expected, Any_t provided, int line_number);
+
+/// Create a new test case
+#define TEST(name)                                                             \
+  static void test_##name();                                                   \
+  static void __attribute__((constructor)) register_test_##name() {            \
+    register_test(#name, test_##name, __FILE_NAME__);                          \
+  }                                                                            \
+  static void test_##name()
+
+#define ASSERT_NULL(expression)                                                \
+  if (!(__assert_null__((expression), __LINE__))) {                            \
+    return;                                                                    \
+  }
+
+#define ASSERT_TRUE(expression)                                                \
+  if (!(__assert_true__((expression), __LINE__))) {                            \
+    return;                                                                    \
+  }
+
+#define ASSERT_FALSE(expression)                                               \
+  if (!(__assert_false__((expression), __LINE__))) {                           \
+    return;                                                                    \
+  }
+
 #define ASSERT_EQ_INT(expected, provided)                                      \
-  return __assert_eq_int__(expected, provided, (char *)__FILE__,               \
-                           (char *)__FUNCTION__, __LINE__)
+  if (!(__assert_eq_int__((expected), (provided), __LINE__))) {                \
+    return;                                                                    \
+  }
 
-/// Checks if the provided strs are equal
+#define ASSERT_NEQ_INT(expected, provided)                                     \
+  if (!(__assert_neq_int__((expected), (provided), __LINE__))) {               \
+    return;                                                                    \
+  }
+
 #define ASSERT_EQ_STR(expected, provided)                                      \
-  return __assert_eq_str__(expected, provided, (char *)__FILE__,               \
-                           (char *)__FUNCTION__, __LINE__)
+  if (!(__assert_eq_str__((expected), (provided), __LINE__))) {                \
+    return;                                                                    \
+  }
 
-/// Checks if the provided structs are equal
-#define ASSERT_EQ_STRUCT(expected, provided, struct_size)                      \
-  return __assert_eq_struct__(expected, provided, struct_size,                 \
-                              (char *)__FILE__, (char *)__FUNCTION__,          \
-                              __LINE__)
+#define ASSERT_EQ_STRUCT(expected, provided)                                   \
+  if (!(__assert_struct_eq__((expected), (provided), __LINE__))) {             \
+    return;                                                                    \
+  }
 
-/// Expects val to be a Boolean `True`
-#define ASSERT_TRUE(val)                                                       \
-  return __assert_true__(val, (char *)__FILE__, (char *)__FUNCTION__, __LINE__)
+/// Will run all `TEST()` cases and returns the fails count
+size_t RUN_ALL_TESTS();
 
-/// Expects val to be a `NULL`
-#define ASSERT_NULL_POINTER(nullp)                                             \
-  return __assert_null_pointer__(nullp, (char *)__FILE__,                      \
-                                 (char *)__FUNCTION__, __LINE__)
-
-#endif // TESTER_H
+#endif // TEST_LIBRARY_H

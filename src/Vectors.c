@@ -73,3 +73,29 @@ Any_t Vector_at(Vector_t vec, size_t index) {
 
   return tmp->data;
 }
+
+Any_t Vector_remove(Vector_t vec, size_t index) {
+  if (index < 0 || index >= vec->size) {
+    return NULL;
+  }
+
+  vec->size--;
+
+  if (index == 0) {
+    Node_t tmp = vec->head;
+    vec->head = tmp->next;
+    Any_t data = tmp->data;
+    free(tmp);
+    return data;
+  }
+
+  Node_t prev = vec->head;
+  for (int i = 0; i < (index - 1); ++i) {
+    prev = prev->next;
+  }
+  Node_t target = prev->next;
+  prev->next = target->next;
+  Any_t data = target->data;
+  free(target);
+  return data;
+}
