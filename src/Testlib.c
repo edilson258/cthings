@@ -5,21 +5,23 @@
 
 #include "../include/Testlib.h"
 
-#define MAX_TESTS_PER_SUITE 50
+#define INITIAL_TEST_SUITE_CAP 50
 
 /// The instance of TestSuite that represents a suite of test
 /// every file that contains `TEST()` cases is considered a test suite
+///
+/// yha! it's SINGLETON
 struct TestSuite *global_test_suite_object = NULL;
 
 void setup_global_test_suite_object(Str_t filename) {
   global_test_suite_object = malloc(sizeof(struct TestSuite));
   global_test_suite_object->name = filename;
   global_test_suite_object->curr_test = NULL;
-  global_test_suite_object->cap = MAX_TESTS_PER_SUITE;
+  global_test_suite_object->cap = INITIAL_TEST_SUITE_CAP;
   global_test_suite_object->count = 0;
   global_test_suite_object->fails_count = 0;
   global_test_suite_object->tests =
-      malloc(sizeof(struct Test *) * MAX_TESTS_PER_SUITE);
+      malloc(sizeof(struct Test *) * INITIAL_TEST_SUITE_CAP);
 }
 
 struct Test *Test_new(Str_t name, TestBody body) {
@@ -31,10 +33,14 @@ struct Test *Test_new(Str_t name, TestBody body) {
 }
 
 void register_test(Str_t name, TestBody body, Str_t filename) {
-  // @TODO: check bounds of global_test_suite_object
-
   if (!global_test_suite_object) {
     setup_global_test_suite_object(filename);
+  } else if (global_test_suite_object->count >= global_test_suite_object->cap) {
+    global_test_suite_object->tests =
+        realloc(global_test_suite_object->tests,
+                sizeof(struct Test *) *
+                    (global_test_suite_object->cap + INITIAL_TEST_SUITE_CAP));
+    global_test_suite_object->cap += INITIAL_TEST_SUITE_CAP;
   }
   global_test_suite_object->tests[global_test_suite_object->count++] =
       Test_new(name, body);
