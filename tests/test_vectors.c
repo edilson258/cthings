@@ -1,11 +1,16 @@
 #include "../include/Testlib.h"
 #include "../include/Vectors.h"
 
-TEST(vectorLengthMustBe2) {
+TEST(vectorLengthAfterPushAndRemoveElems) {
   Vector_t vec = Vector_new();
   Vector_push(vec, Int(69));
   Vector_push(vec, Int(420));
+
   ASSERT_EQ_INT(2, Vector_len(vec));
+
+  Vector_remove(vec, 1);
+
+  ASSERT_EQ_INT(1, Vector_len(vec));
 }
 
 TEST(ensurePushedElemsAreNotModified) {
@@ -26,7 +31,19 @@ TEST(ensurePushedElemsAreNotModified) {
 TEST(accessElemOutOfBound) {
   Vector_t vec = Vector_new();
   Vector_push(vec, Int(69));
+
+  // access elem out of bound
   ASSERT_NULL(Vector_at(vec, 1));
+}
+
+TEST(vectorRemoveFunction) {
+  Vector_t vec = Vector_new();
+  Vector_push(vec, Int(69));
+
+  // remove out of bound
+  ASSERT_NULL(Vector_remove(vec, 1));
+
+  ASSERT_EQ_INT(69, *(int *)Vector_remove(vec, 0));
 }
 
 struct Person {

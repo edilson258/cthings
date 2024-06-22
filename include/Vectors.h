@@ -197,4 +197,22 @@ size_t Vector_len(Vector_t vec);
  */
 Any_t Vector_at(Vector_t vec, size_t index);
 
+/*
+ * Function: Vector_remove(Vector_t vec, size_t index) -> Any_t
+ *
+ * Will remove the element at index `index` from vec and return it
+ *
+ * Parameters:
+ *
+ * - `Vector_t vec`: The vec to remove from
+ * - `size_t index`: The index of the element to be removed
+ *
+ * Returns:
+ *
+ * - `On success`: the remove elem
+ * - `On out of bound`: NULL
+ *
+ */
+Any_t Vector_remove(Vector_t vec, size_t index);
+
 #endif // VECTORS_H
