@@ -85,7 +85,7 @@ Boolean __assert_eq_struct__(Any_t expected, Any_t provided, int line_number);
   }
 
 #define ASSERT_EQ_STRUCT(expected, provided)                                   \
-  if (!(__assert_struct_eq__((expected), (provided), __LINE__))) {             \
+  if (!(__assert_eq_struct__((expected), (provided), __LINE__))) {             \
     return;                                                                    \
   }
 
