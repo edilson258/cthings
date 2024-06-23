@@ -12,17 +12,13 @@ int Vector_isempty(Vector_t vec) { return vec->size == 0; }
 
 void Vector_push(Vector_t vec, Any_t elem) {
   if (Vector_isempty(vec)) {
-    vec->head = Node_new(elem);
+    Node_t node = Node_new(elem);
+    vec->head = node;
+    vec->tail = node;
   } else {
-    Node_t tmp = vec->head;
-    /*
-     * O(n)
-     *
-     */
-    while (tmp->next) {
-      tmp = tmp->next;
-    }
-    tmp->next = Node_new(elem);
+    Node_t node = Node_new(elem);
+    vec->tail->next = node;
+    vec->tail = node;
   }
   vec->size++;
 }

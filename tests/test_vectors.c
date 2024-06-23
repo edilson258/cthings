@@ -71,4 +71,21 @@ TEST(vectorReduceFunction) {
   ASSERT_EQ_INT(p.age + p2.age, age_acc);
 }
 
+TEST(stressTest) {
+  Vector_t vec = Vector_new();
+
+  for (int i = 0; i < 300000; ++i) {
+    Vector_push(vec, Int(1024 * i));
+  }
+
+  ASSERT_EQ_INT(300000, Vector_len(vec));
+  ASSERT_EQ_INT(1024 * 50, *(int *)Vector_at(vec, 50));
+
+  for (int i = 0; i < 150000; ++i) {
+    Vector_remove(vec, 0);
+  }
+
+  ASSERT_EQ_INT(150000, Vector_len(vec));
+}
+
 int main() { return RUN_ALL_TESTS(); }

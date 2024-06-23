@@ -18,6 +18,7 @@
 typedef struct {
   // Head of the linked list
   Node_t head;
+  Node_t tail;
 
   // number of elements
   size_t size;
