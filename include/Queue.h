@@ -1,13 +1,15 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include "Common.h"
+#include <pthread.h>
 #include <stddef.h>
+
+#include "Common.h"
 
 /*
  * Structure: Queue
  *
- * Represents a queue data structure.
+ * Represents a thread-safe queue data structure.
  *
  * Members:
  * - Node_t head: Pointer to the head of the queue.
@@ -15,6 +17,8 @@
 typedef struct {
   Node_t head;
   size_t size;
+  Node_t tail;
+  pthread_mutex_t mutx;
 } Queue;
 
 typedef Queue *Queue_t;
@@ -38,9 +42,9 @@ Queue_t Queue_new();
  * - Queue_t queue: Pointer to the queue to check.
  *
  * Returns:
- * - int: 1 if the queue is empty, 0 otherwise.
+ * - `True`: if the queue is empty otherwise `False`
  */
-int Queue_is_empty(Queue_t queue);
+Boolean Queue_is_empty(Queue_t queue);
 
 /*
  * Function: Queue_dequeue(Queue_t queue) -> void*

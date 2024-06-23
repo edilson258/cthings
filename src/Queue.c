@@ -1,4 +1,5 @@
 #include <errno.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -13,42 +14,52 @@ Queue_t Queue_new() {
   }
   queue->head = NULL;
   queue->size = 0;
+  pthread_mutex_init(&queue->mutx, NULL);
   return queue;
 }
 
-int Queue_is_empty(Queue_t queue) { return queue->head == NULL; }
+Boolean Queue_is_empty(Queue_t queue) {
+  pthread_mutex_lock(&queue->mutx);
+  Boolean is_empty = queue->head == NULL;
+  pthread_mutex_unlock(&queue->mutx);
+  return is_empty;
+}
 
-void *Queue_dequeue(Queue_t queue) {
+Any_t Queue_dequeue(Queue_t queue) {
   if (Queue_is_empty(queue)) {
     return NULL;
   }
-  Node_t node = queue->head;
-  queue->head = node->next;
-  void *message = node->data;
-  free(node);
+  pthread_mutex_lock(&queue->mutx);
+  Node_t tmp = queue->head;
+  queue->head = tmp->next;
+  Any_t data = tmp->data;
+  free(tmp);
   queue->size--;
-  return message;
+  pthread_mutex_unlock(&queue->mutx);
+  return data;
 }
 
-int Queue_enqueue(Queue_t queue, void *data) {
+int Queue_enqueue(Queue_t queue, Any_t data) {
   Node_t node = Node_new(data);
   if (node == NULL) {
     return -1;
   }
-
+  pthread_mutex_lock(&queue->mutx);
   if (!queue->head) {
     queue->head = node;
+    queue->tail = node;
   } else {
-    /*
-     * O(n)
-     */
-    Node_t tmp = queue->head;
-    while (tmp->next)
-      tmp = tmp->next;
-    tmp->next = node;
+    queue->tail->next = node;
+    queue->tail = node;
   }
   queue->size++;
+  pthread_mutex_unlock(&queue->mutx);
   return 0;
 }
 
-size_t Queue_size(Queue_t queue) { return queue->size; }
+size_t Queue_size(Queue_t queue) {
+  pthread_mutex_lock(&queue->mutx);
+  size_t queue_size = queue->size;
+  pthread_mutex_unlock(&queue->mutx);
+  return queue_size;
+}
