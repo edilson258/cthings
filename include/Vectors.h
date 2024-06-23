@@ -1,6 +1,7 @@
 #ifndef VECTORS_H
 #define VECTORS_H
 
+#include <pthread.h>
 #include <stddef.h>
 
 #include "Common.h"
@@ -16,12 +17,14 @@
  *
  */
 typedef struct {
-  // Head of the linked list
+  // Head and tail of the linked list
   Node_t head;
   Node_t tail;
 
   // number of elements
   size_t size;
+
+  pthread_mutex_t mutx;
 } Vector;
 
 /*
