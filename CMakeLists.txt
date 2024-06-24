@@ -10,3 +10,4 @@ file(GLOB C_Things_Sources "src/*.c")
 add_library(cthings STATIC ${C_Things_Sources})
 
 add_subdirectory(tests)
+add_subdirectory(examples)
