@@ -11,6 +11,7 @@ HEADER_FILES = [
     "./include/MPSC.h",
     "./include/Stack.h",
     "./include/Testlib.h",
+    "./include/Logger.h",
 ]
 
 # Set to store unique #include statements
@@ -70,6 +71,6 @@ with open(combined_header, "w") as f:
     for file_contents in FILES_CONTENTS:
         f.writelines(file_contents)
 
-    f.write("#endif\n")
+    f.write("#endif // C_THINGS\n")
 
 print(f"[INFO]: Combined headers into {combined_header}")
