@@ -10,7 +10,7 @@ The C Things Framework aims to address these challenges by providing an abstract
 - [x] Stack Data structure
 - [x] [Vector Library](docs/VECTORS.md)
 - [ ] HashMap Data structure
-- [ ] Log System
+- [x] [Log System](docs/LOGGER.md)
 - [ ] Date and Time
 - [x] [Test Library](docs/TESTLIB.md)
 
