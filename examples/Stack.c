@@ -1,5 +1,6 @@
-#include "../include/Stack.h"
 #include <stdio.h>
+
+#include "../include/Stack.h"
 
 int main(void) {
   Stack_t stack = Stack_new(2);

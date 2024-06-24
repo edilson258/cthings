@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "../build/cthings.h"
+#include "../include/Strings.h"
 
 int main(void) {
   String_t hello = String_new("Hello");
