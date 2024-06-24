@@ -1,6 +1,7 @@
 #ifndef VECTORS_H
 #define VECTORS_H
 
+#include <pthread.h>
 #include <stddef.h>
 
 #include "Common.h"
@@ -16,11 +17,16 @@
  *
  */
 typedef struct {
-  // Head of the linked list
+  // Head and tail of the linked list
   Node_t head;
+  Node_t tail;
+
+  Node_t head_iter;
 
   // number of elements
   size_t size;
+
+  pthread_mutex_t mutx;
 } Vector;
 
 /*
@@ -214,5 +220,32 @@ Any_t Vector_at(Vector_t vec, size_t index);
  *
  */
 Any_t Vector_remove(Vector_t vec, size_t index);
+
+/**
+ * Function: Vector_iter(Vector_t vec, Any_t *elem) -> Boolean
+ *
+ * will iterate over vector `vec` elements and point the current element to
+ * `elem` variable
+ *
+ * Parameters:
+ *
+ * - `Vector_t vec`: the vec to iterate
+ * - `Any_t *elem`: The iterator var
+ *
+ * Returns:
+ *
+ * - 'True': if still elements to iterate
+ * - `False`: if is not elements to iterate
+ *
+ */
+Boolean Vector_iter(Vector_t vec, Any_t *elem);
+
+/**
+ * Function: Vector_iter_reset(Vector_t vec)
+ *
+ * Will reset the iterator to point back to the beginning of the vector
+ *
+ */
+void Vector_iter_reset(Vector_t vec);
 
 #endif // VECTORS_H

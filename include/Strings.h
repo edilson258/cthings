@@ -1,16 +1,20 @@
 #ifndef STRINGS_H
 #define STRINGS_H
 
+#include <pthread.h>
+#include <stddef.h>
+
+#include "Common.h"
+
 typedef struct String {
   /* Private field should only be accessed by internal API */
   char *inner;
+  size_t length;
+  pthread_mutex_t mutx;
 } String;
 
 /* Syntax sugar for `String *` */
 typedef String *String_t;
-
-/* Syntax sugar for `char *` */
-typedef char *RawStr_t;
 
 /*
  * Function: String(text)
@@ -43,7 +47,7 @@ typedef char *RawStr_t;
  * fails.
  *
  */
-String_t String_new(RawStr_t text);
+String_t String_new(Str_t text);
 
 /*
  * Function: String_drop(string)
@@ -54,10 +58,11 @@ String_t String_new(RawStr_t text);
  *   string - Pointer to the String instance to be cleaned up.
  *
  * Returns:
- *   None
+ *
+ *   0 on success and -1 on error
  *
  */
-void String_drop(String_t string);
+int String_drop(String_t string);
 
 /*
  * Function: String_val(string)
@@ -71,7 +76,7 @@ void String_drop(String_t string);
  *   Pointer to the C-style string contained within the String.
  *
  */
-RawStr_t String_val(String_t string);
+Str_t String_val(String_t string);
 
 /*
  * Function: String_clone(src)
@@ -142,7 +147,7 @@ String_t String_trim(String_t string);
  *   Length of the C-style string stored inside the String.
  *
  */
-unsigned long String_len(String_t string);
+size_t String_len(String_t string);
 
 /*
  * Function: String_join(lhs, rhs)
@@ -178,6 +183,6 @@ String_t String_join(String_t lhs, String_t rhs);
  * result with the delimiter.
  *
  */
-String_t String_join_by(String_t lhs, String_t rhs, RawStr_t delimiter);
+String_t String_join_by(String_t lhs, String_t rhs, Str_t delimiter);
 
 #endif // STRINGS_H

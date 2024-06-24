@@ -1,6 +1,7 @@
 #ifndef STACK_H
 #define STACK_H
 
+#include <pthread.h>
 #include <stddef.h>
 
 #include "../include/Common.h"
@@ -15,6 +16,7 @@ typedef struct {
   Node_t head;
   size_t size;
   size_t max_stack;
+  pthread_mutex_t mutx;
 } Stack;
 
 /*
@@ -88,7 +90,7 @@ Boolean Stack_is_full(Stack_t stack);
  *  - `Any_t data`: The value to be pushed
  *
  */
-void Stack_push(Stack_t stack, Any_t data);
+int Stack_push(Stack_t stack, Any_t data);
 
 /*
  * Function: Stack_pop(Stack_t stack) -> Any_t
