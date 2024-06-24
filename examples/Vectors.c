@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../build/cthings.h"
+#include "../include/Vectors.h"
 
 typedef struct {
   int age;
@@ -29,12 +29,11 @@ void acc_person_age(Any_t x, Any_t y) { *(double *)y += ((Person *)x)->age; }
 int filter_under_50(Any_t x) { return ((Person *)x)->age < 50; }
 
 void print_people_vec(Vector_t vec) {
-  Node_t tmp = vec->head;
-  while (tmp) {
-    Person *p = tmp->data;
-    printf("%s => %d\n", p->name, p->age);
-    tmp = tmp->next;
+  Person *p;
+  while (Vector_iter(vec, (Any_t *)&p)) {
+    printf("%s => %d\n", p->name, 10);
   }
+  Vector_iter_reset(vec);
 }
 
 int main(void) {

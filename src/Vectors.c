@@ -8,6 +8,7 @@ Vector_t Vector_new() {
   vec->size = 0;
   vec->head = NULL;
   vec->tail = NULL;
+  vec->head_iter = NULL;
   pthread_mutex_init(&vec->mutx, NULL);
   return vec;
 }
@@ -25,6 +26,7 @@ void Vector_push(Vector_t vec, Any_t elem) {
     pthread_mutex_lock(&vec->mutx);
     vec->head = node;
     vec->tail = node;
+    vec->head_iter = node;
   } else {
     Node_t node = Node_new(elem);
     pthread_mutex_lock(&vec->mutx);
@@ -100,6 +102,7 @@ Any_t Vector_remove(Vector_t vec, size_t index) {
   if (index == 0) {
     Node_t tmp = vec->head;
     vec->head = tmp->next;
+    vec->head_iter = tmp->next;
     Any_t data = tmp->data;
     free(tmp);
     pthread_mutex_unlock(&vec->mutx);
@@ -115,4 +118,22 @@ Any_t Vector_remove(Vector_t vec, size_t index) {
   free(target);
   pthread_mutex_unlock(&vec->mutx);
   return data;
+}
+
+Boolean Vector_iter(Vector_t vec, Any_t _Nullable *elem) {
+  pthread_mutex_lock(&vec->mutx);
+  if (!vec->head_iter) {
+    pthread_mutex_unlock(&vec->mutx);
+    return False;
+  }
+  *elem = vec->head_iter->data;
+  vec->head_iter = vec->head_iter->next;
+  pthread_mutex_unlock(&vec->mutx);
+  return True;
+}
+
+void Vector_iter_reset(Vector_t vec) {
+  pthread_mutex_lock(&vec->mutx);
+  vec->head_iter = vec->head;
+  pthread_mutex_unlock(&vec->mutx);
 }
